@@ -1,0 +1,13 @@
+[Unit]
+Description=claps
+After=network.target
+[Service]
+ExecStart=/var/apps/claps/claps-responder.js
+Restart=always
+User=app
+Group=app
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/apps/claps
+[Install]
+WantedBy=multi-user.target
