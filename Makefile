@@ -1,24 +1,17 @@
 HOMEDIR = $(shell pwd)
+SMUSER = noderunner
+SERVER = sprigot-droplet
+SSHCMD = ssh $(SMUSER)@$(SERVER)
+APPDIR = /var/www/if-you-are-reading-this
+PROJECTNAME = claps
+APPDIR = /var/www/$(PROJECTNAME)
 
-SSHCMD = ssh $(SMUSER)@smidgeo-headporters
-APPDIR = /var/apps/claps
+run:
+	node post-tweet-chain.js
 
-pushall: sync set-permissions
+pushall: sync
 	git push origin master
 
 sync:
-	rsync -a $(HOMEDIR) $(SMUSER)@smidgeo-headporters:/var/apps/ --exclude node_modules/ --exclude data/
-	ssh $(SMUSER)@smidgeo-headporters "cd /var/apps/claps && npm install"
-
-restart-remote:
-	$(SSHCMD) "systemctl restart claps"
-
-set-permissions:
-	$(SSHCMD) "chmod +x /var/apps/claps/claps-responder.js && \
-	chmod 777 -R /var/apps/claps/data"
-
-update-remote: sync set-permissions restart-remote
-
-install-service:
-	$(SSHCMD) "cp $(APPDIR)/claps.service /etc/systemd/system && \
-	systemctl daemon-reload"
+	rsync -a $(HOMEDIR) $(SMUSER)@$(SERVER):/var/www/ --exclude node_modules/
+	ssh $(SMUSER)@$(SERVER) "cd $(APPDIR) && npm install"
