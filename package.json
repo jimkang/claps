@@ -30,8 +30,8 @@
     "post-tweet-chain": "^1.0.0",
     "probable": "^1.8.0",
     "titlecase": "^1.1.2",
-    "twit": "^1.1.20",
+    "twit": "^2.2.4",
     "wander-google-ngrams": "^2.5.1",
-    "wordnok": "^3.1.0"
+    "wordnok": "^3.2.0"
   }
 }
